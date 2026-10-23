@@ -1,0 +1,265 @@
+!DOCTYPE html
+html lang=id
+head
+  meta charset=UTF-8
+  meta name=viewport content=width=device-width, initial-scale=1.0
+  titleCampusFlow - MVP Dashboardtitle
+  script src=httpscdn.tailwindcss.comscript
+  link rel=stylesheet href=httpscdnjs.cloudflare.comajaxlibsfont-awesome6.5.1cssall.min.css
+head
+body class=bg-slate-100 text-slate-800 font-sans antialiased min-h-screen flex flex-col mdflex-row
+
+  !-- Sidebar Navigasi --
+  aside class=w-full mdw-64 bg-indigo-900 text-white flex-shrink-0 p-6 flex flex-col justify-between
+    div
+      div class=flex items-center gap-3 mb-8
+        div class=w-10 h-10 bg-indigo-500 rounded-lg flex items-center justify-center font-bold text-xl
+          i class=fa-solid fa-graduation-cap text-whitei
+        div
+        span class=font-bold text-xl tracking-wideCampusFlowspan
+      div
+      nav class=space-y-2
+        a href=# class=flex items-center gap-3 px-4 py-3 bg-indigo-800 text-white rounded-xl font-medium transition
+          i class=fa-solid fa-chart-pie w-5i Dashboard
+        a
+        a href=# class=flex items-center gap-3 px-4 py-3 text-indigo-200 hoverbg-indigo-800 hovertext-white rounded-xl font-medium transition
+          i class=fa-solid fa-list-check w-5i Daftar Tugas
+        a
+        a href=# class=flex items-center gap-3 px-4 py-3 text-indigo-200 hoverbg-indigo-800 hovertext-white rounded-xl font-medium transition
+          i class=fa-solid fa-users w-5i Tim Kelompok
+        a
+      nav
+    div
+    div class=pt-6 border-t border-indigo-800 flex items-center gap-3 mt-6 mdmt-0
+      div class=w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center font-semibold text-white
+        M
+      div
+      div
+        p class=text-sm font-semiboldMahasiswap
+        p class=text-xs text-indigo-300user@kampus.ac.idp
+      div
+    div
+  aside
+
+  !-- Area Konten Utama --
+  main class=flex-1 p-6 mdp-10 space-y-8
+    
+    !-- Header --
+    header class=flex flex-col mdflex-row mditems-center mdjustify-between gap-4
+      div
+        h1 class=text-2xl mdtext-3xl font-bold text-slate-900Ringkasan Akademikh1
+        p class=text-slate-500 text-sm mt-1Pantau progres tugas kuliah dan proyek kelompok Anda.p
+      div
+      button onclick=openModal() class=inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-indigo-600 hoverbg-indigo-700 text-white font-semibold rounded-xl shadow-md transition
+        i class=fa-solid fa-plusi Tambah Tugas
+      button
+    header
+
+    !-- Kartu Statistik --
+    section class=grid grid-cols-1 smgrid-cols-3 gap-6
+      div class=bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between
+        div
+          p class=text-xs font-semibold text-slate-400 uppercase tracking-widerTotal Tugasp
+          p class=text-3xl font-extrabold text-slate-900 mt-1 id=totalCount0p
+        div
+        div class=w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl
+          i class=fa-solid fa-folder-openi
+        div
+      div
+      div class=bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between
+        div
+          p class=text-xs font-semibold text-slate-400 uppercase tracking-widerSedang Berjalanp
+          p class=text-3xl font-extrabold text-amber-600 mt-1 id=activeCount0p
+        div
+        div class=w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-xl
+          i class=fa-solid fa-spinneri
+        div
+      div
+      div class=bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between
+        div
+          p class=text-xs font-semibold text-slate-400 uppercase tracking-widerSelesaip
+          p class=text-3xl font-extrabold text-emerald-600 mt-1 id=doneCount0p
+        div
+        div class=w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl
+          i class=fa-solid fa-circle-checki
+        div
+      div
+    section
+
+    !-- Tabel Data Tugas --
+    section class=bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden
+      div class=p-6 border-b border-slate-100 flex flex-col smflex-row smitems-center justify-between gap-4
+        h2 class=text-lg font-bold text-slate-900Daftar Tugas Aktifh2
+        div class=flex items-center gap-2 bg-slate-100 p-1 rounded-xl text-sm
+          button onclick=filterTasks('all') id=tab-all class=px-4 py-1.5 rounded-lg font-medium text-slate-700 bg-white shadow-smSemuabutton
+          button onclick=filterTasks('pending') id=tab-pending class=px-4 py-1.5 rounded-lg font-medium text-slate-500 hovertext-slate-700Prosesbutton
+          button onclick=filterTasks('completed') id=tab-completed class=px-4 py-1.5 rounded-lg font-medium text-slate-500 hovertext-slate-700Selesaibutton
+        div
+      div
+
+      div class=overflow-x-auto
+        table class=w-full text-left border-collapse
+          thead
+            tr class=bg-slate-50 border-b border-slate-100 text-xs font-semibold text-slate-400 uppercase
+              th class=py-4 px-6Mata Kuliah & Tugasth
+              th class=py-4 px-6Batas Waktuth
+              th class=py-4 px-6Statusth
+              th class=py-4 px-6 text-rightAksith
+            tr
+          thead
+          tbody id=taskList class=divide-y divide-slate-100 text-sm
+            !-- Data dirender melalui JavaScript --
+          tbody
+        table
+      div
+    section
+  main
+
+  !-- Modal Input Form --
+  div id=modal class=fixed inset-0 bg-slate-90050 backdrop-blur-sm hidden items-center justify-center z-50 p-4
+    div class=bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden
+      div class=px-6 py-4 border-b border-slate-100 flex items-center justify-between
+        h3 class=font-bold text-lg text-slate-900Tambah Tugas Baruh3
+        button onclick=closeModal() class=text-slate-400 hovertext-slate-600i class=fa-solid fa-xmark text-lgibutton
+      div
+      form id=taskForm onsubmit=handleAddTask(event) class=p-6 space-y-4
+        div
+          label class=block text-xs font-semibold text-slate-600 mb-1Nama Mata Kuliah & Tugaslabel
+          input type=text id=taskTitle required placeholder=Contoh Pemrograman Web - Project MVP class=w-full px-4 py-2.5 rounded-xl border border-slate-200 focusoutline-none focusring-2 focusring-indigo-500 text-sm
+        div
+        div
+          label class=block text-xs font-semibold text-slate-600 mb-1Batas Waktulabel
+          input type=date id=taskDueDate required class=w-full px-4 py-2.5 rounded-xl border border-slate-200 focusoutline-none focusring-2 focusring-indigo-500 text-sm
+        div
+        div class=pt-4 flex justify-end gap-3
+          button type=button onclick=closeModal() class=px-4 py-2 text-slate-600 font-medium hoverbg-slate-100 rounded-xl text-smBatalbutton
+          button type=submit class=px-5 py-2 bg-indigo-600 hoverbg-indigo-700 text-white font-medium rounded-xl text-sm transitionSimpan Tugasbutton
+        div
+      form
+    div
+  div
+
+  !-- Notifikasi Toast --
+  div id=toast class=fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-3 text-sm z-50
+    i class=fa-solid fa-circle-check text-emerald-400 text-lgi
+    span id=toastMessagePesan Notifikasispan
+  div
+
+  !-- JavaScript Interaktif --
+  script
+    let tasks = [
+      { id 1, title UIUX Design - Wireframe MVP, date 2026-11-01, status pending },
+      { id 2, title Basis Data - Normalisasi ERD, date 2026-10-28, status completed },
+      { id 3, title Pemrograman Web - Deploy Railway, date 2026-10-25, status pending }
+    ];
+
+    let currentFilter = 'all';
+
+    function renderTasks() {
+      const listEl = document.getElementById('taskList');
+      listEl.innerHTML = '';
+
+      const filtered = tasks.filter(t = {
+        if (currentFilter === 'pending') return t.status === 'pending';
+        if (currentFilter === 'completed') return t.status === 'completed';
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = `trtd colspan=4 class=py-8 text-center text-slate-400Tidak ada tugas ditemukan.tdtr`;
+        return;
+      }
+
+      filtered.forEach(task = {
+        const isDone = task.status === 'completed';
+        const tr = document.createElement('tr');
+        tr.className = hoverbg-slate-50 transition;
+        tr.innerHTML = `
+          td class=py-4 px-6 font-medium ${isDone  'line-through text-slate-400'  'text-slate-800'}${task.title}td
+          td class=py-4 px-6 text-slate-500${task.date}td
+          td class=py-4 px-6
+            span class=inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${isDone  'bg-emerald-100 text-emerald-700'  'bg-amber-100 text-amber-700'}
+              ${isDone  'Selesai'  'Sedang Berjalan'}
+            span
+          td
+          td class=py-4 px-6 text-right
+            button onclick=toggleStatus(${task.id}) class=text-xs px-3 py-1.5 rounded-lg border border-slate-200 hoverbg-slate-100 font-medium text-slate-600 transition
+              ${isDone  'Tandai Belum'  'Tandai Selesai'}
+            button
+          td
+        `;
+        listEl.appendChild(tr);
+      });
+
+      updateCounts();
+    }
+
+    function updateCounts() {
+      document.getElementById('totalCount').innerText = tasks.length;
+      document.getElementById('activeCount').innerText = tasks.filter(t = t.status === 'pending').length;
+      document.getElementById('doneCount').innerText = tasks.filter(t = t.status === 'completed').length;
+    }
+
+    function filterTasks(filter) {
+      currentFilter = filter;
+      ['all', 'pending', 'completed'].forEach(f = {
+        const btn = document.getElementById(`tab-${f}`);
+        if (f === filter) {
+          btn.className = px-4 py-1.5 rounded-lg font-medium text-slate-700 bg-white shadow-sm;
+        } else {
+          btn.className = px-4 py-1.5 rounded-lg font-medium text-slate-500 hovertext-slate-700;
+        }
+      });
+      renderTasks();
+    }
+
+    function toggleStatus(id) {
+      const task = tasks.find(t = t.id === id);
+      if (task) {
+        task.status = task.status === 'completed'  'pending'  'completed';
+        showToast(task.status === 'completed'  'Status tugas diperbarui ke Selesai!'  'Status tugas dikembalikan ke Proses.');
+        renderTasks();
+      }
+    }
+
+    function openModal() {
+      document.getElementById('modal').classList.remove('hidden');
+      document.getElementById('modal').classList.add('flex');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+      document.getElementById('modal').classList.remove('flex');
+      document.getElementById('taskForm').reset();
+    }
+
+    function handleAddTask(event) {
+      event.preventDefault();
+      const title = document.getElementById('taskTitle').value;
+      const date = document.getElementById('taskDueDate').value;
+
+      tasks.unshift({
+        id Date.now(),
+        title title,
+        date date,
+        status 'pending'
+      });
+
+      closeModal();
+      renderTasks();
+      showToast('Tugas baru berhasil ditambahkan!');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMessage').innerText = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      setTimeout(() = {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    renderTasks();
+  script
+body
+html
